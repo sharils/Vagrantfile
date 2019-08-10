@@ -60,6 +60,26 @@ Vagrant.configure("2") do |config|
     # https://www.vagrantup.com/docs/virtualbox/configuration.html#vboxmanage-customizations
     vb.customize ["modifyvm", :id, "--vram", 16]
     vb.customize ["modifyvm", :id, "--usbxhci", "on"]
+
+    # `VBoxManage list usbhost`
+    # `VBoxManage showvminfo`
+    # http://web.archive.org/web/20150808103810/https://antonyjepson.wordpress.com/2012/01/26/quickly-attaching-usb-devices-to-virtualbox-guests-using-vboxmanage/
+    # vb.customize ["usbfilter", "remove", 0, "--target", :id]
+    # vb.customize ["usbfilter", "remove", 0, "--target", :id]
+    vb.customize [
+      "usbfilter", "add", 0,
+      "--target", :id,
+      "--name", "Generic EMV Smartcard Reader [0120]",
+      "--vendorid", "0x058f",
+      "--productid", "0x9540"
+    ]
+    vb.customize [
+      "usbfilter", "add", 0,
+      "--target", :id,
+      "--name", "THRC Smart Card Reader [0096]",
+      "--vendorid", "0x062d",
+      "--productid", "0x0001"
+    ]
   end
 
   # View the documentation for the provider you are using for more
